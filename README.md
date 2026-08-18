@@ -1,5 +1,7 @@
 # Meter loss screening
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=msj78598%2Fhes-loss-detector&branch=main&mainModule=streamlit_app.py)
+
 Upload a three-phase readings export. Every reading is scored, rolled up to one
 row per meter, and ranked. Download the result as a spreadsheet.
 
@@ -71,6 +73,21 @@ see at a glance whether you exported the wrong report.
 pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
+
+## Deploy
+
+Click the badge above, or go to [share.streamlit.io](https://share.streamlit.io)
+and create an app with:
+
+| Field | Value |
+|---|---|
+| Repository | `msj78598/hes-loss-detector` |
+| Branch | `main` |
+| Main file | `streamlit_app.py` |
+| Python version | 3.12 |
+
+No secrets to configure — the app has no credentials, no database, and no
+outbound calls.
 
 There is a synthetic sample file behind the **Sample file** button — generated
 from the physics, not recorded from anywhere — so you can see the output shape
