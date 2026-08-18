@@ -1,0 +1,7 @@
+streamlit>=1.57
+pandas>=2.2
+numpy>=1.26
+scikit-learn==1.7.2
+joblib>=1.4
+openpyxl>=3.1
+xlsxwriter>=3.2

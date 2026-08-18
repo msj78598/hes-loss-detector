@@ -1,0 +1,58 @@
+# Utility-blue on a neutral ground, with the semantic colours reserved for
+# confidence tiers so a red row always means the same thing.
+
+[theme]
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+headingFont = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap"
+codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+baseFontSize = 15
+headingFontSizes = ["30px", "22px", "18px", "16px", "14px", "13px"]
+headingFontWeights = [700, 600, 600, 600, 500, 500]
+baseRadius = "8px"
+buttonRadius = "8px"
+linkUnderline = false
+showWidgetBorder = true
+
+[theme.light]
+primaryColor = "#0B3D91"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F4F6FA"
+textColor = "#111827"
+linkColor = "#0B3D91"
+borderColor = "#DDE3EC"
+codeBackgroundColor = "#F4F6FA"
+dataframeHeaderBackgroundColor = "#F4F6FA"
+dataframeBorderColor = "#DDE3EC"
+redColor = "#B91C1C"
+orangeColor = "#B45309"
+yellowColor = "#A16207"
+greenColor = "#15803D"
+blueColor = "#0B3D91"
+violetColor = "#6D28D9"
+grayColor = "#64748B"
+chartCategoricalColors = ["#0B3D91", "#B91C1C", "#B45309", "#15803D", "#6D28D9", "#0E7490", "#64748B"]
+
+[theme.dark]
+primaryColor = "#6699EE"
+backgroundColor = "#0E1420"
+secondaryBackgroundColor = "#18202F"
+textColor = "#E6EDF6"
+linkColor = "#6699EE"
+borderColor = "#2A3446"
+codeBackgroundColor = "#18202F"
+dataframeHeaderBackgroundColor = "#18202F"
+dataframeBorderColor = "#2A3446"
+redColor = "#F87171"
+orangeColor = "#FB923C"
+yellowColor = "#FACC15"
+greenColor = "#4ADE80"
+blueColor = "#6699EE"
+violetColor = "#A78BFA"
+grayColor = "#94A3B8"
+chartCategoricalColors = ["#6699EE", "#F87171", "#FB923C", "#4ADE80", "#A78BFA", "#22D3EE", "#94A3B8"]
+
+[server]
+maxUploadSize = 200
+
+[browser]
+gatherUsageStats = false

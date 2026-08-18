@@ -1,0 +1,26 @@
+# Never commit data. This repository ships code and one model file — nothing
+# else. Any readings, exports, or reference tables that land here by accident
+# are ignored on purpose, because a single committed spreadsheet is not
+# something a later commit can take back.
+*.xlsx
+*.xls
+*.csv
+*.parquet
+*.db
+*.sqlite*
+data/
+exports/
+uploads/
+
+# Secrets
+.streamlit/secrets.toml
+.env
+secret*
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
