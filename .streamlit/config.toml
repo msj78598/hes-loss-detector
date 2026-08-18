@@ -1,5 +1,8 @@
-# Utility-blue on a neutral ground, with the semantic colours reserved for
+# Utility blue on a neutral ground, with the semantic colours reserved for the
 # confidence tiers so a red row always means the same thing.
+#
+# Chart colours live under [theme] only — Streamlit rejects them inside
+# [theme.light] / [theme.dark], and a rejected option is silently ignored.
 
 [theme]
 font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -12,6 +15,7 @@ baseRadius = "8px"
 buttonRadius = "8px"
 linkUnderline = false
 showWidgetBorder = true
+chartCategoricalColors = ["#0B3D91", "#B91C1C", "#B45309", "#15803D", "#6D28D9", "#0E7490", "#64748B"]
 
 [theme.light]
 primaryColor = "#0B3D91"
@@ -30,7 +34,6 @@ greenColor = "#15803D"
 blueColor = "#0B3D91"
 violetColor = "#6D28D9"
 grayColor = "#64748B"
-chartCategoricalColors = ["#0B3D91", "#B91C1C", "#B45309", "#15803D", "#6D28D9", "#0E7490", "#64748B"]
 
 [theme.dark]
 primaryColor = "#6699EE"
@@ -49,7 +52,6 @@ greenColor = "#4ADE80"
 blueColor = "#6699EE"
 violetColor = "#A78BFA"
 grayColor = "#94A3B8"
-chartCategoricalColors = ["#6699EE", "#F87171", "#FB923C", "#4ADE80", "#A78BFA", "#22D3EE", "#94A3B8"]
 
 [server]
 maxUploadSize = 200
