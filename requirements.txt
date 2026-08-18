@@ -1,6 +1,13 @@
+# scikit-learn is pinned exactly: the model is a pickle, and loading it under a
+# different version either fails outright or — worse — loads with changed
+# behaviour and no warning.
+#
+# numpy must be 2.x. The bundle was serialised under numpy 2 and references
+# `numpy._core`, a module that does not exist in 1.x. numpy 2 can read 1.x
+# pickles; the reverse fails at import time.
 streamlit>=1.57
 pandas>=2.2
-numpy>=1.26
+numpy>=2.0,<3
 scikit-learn==1.7.2
 joblib>=1.4
 openpyxl>=3.1
