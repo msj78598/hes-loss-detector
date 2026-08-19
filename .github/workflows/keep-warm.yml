@@ -23,8 +23,15 @@ jobs:
         run: |
           URL="${{ vars.APP_URL || 'https://asdpro1.streamlit.app/' }}"
           echo "Pinging $URL"
-          code=$(curl -sSL -o /dev/null -w '%{http_code}' --max-time 90 "$URL" || echo 000)
-          echo "HTTP $code"
-          # A sleeping app answers too, so a non-200 is informational, not a failure:
-          # this job exists to generate traffic, not to gate anything.
-          [ "$code" = "000" ] && echo "::warning::no response — check the app URL" || true
+          # Community Cloud answers a parked app with a 303 to its wake page, so
+          # redirects are followed and the final code is what counts. curl's exit
+          # status is captured separately — folding it into the same variable
+          # concatenates the two and prints nonsense like "303000".
+          code=$(curl -sSL -o /dev/null                       -A 'keep-warm (github-actions)'                       -w '%{http_code}' --max-time 120 --retry 2 --retry-delay 10                       "$URL")
+          rc=$?
+          echo "final HTTP ${code:-none} · curl exit ${rc}"
+          # The job's purpose is traffic, not gating, so it never fails the run —
+          # it only flags the case where nothing answered at all.
+          if [ "$rc" -ne 0 ] || [ -z "$code" ] || [ "$code" = "000" ]; then
+            echo "::warning::no usable response (code=${code:-none}, curl=${rc}) — check APP_URL"
+          fi
