@@ -1,0 +1,30 @@
+# Streamlit Community Cloud parks an app that sees no traffic, and waking it is a
+# cold start from nothing: clone, install forty-five packages, import scikit-learn,
+# unpickle the model. That is the whole delay — the model itself loads in about a
+# second and is already zlib-compressed, so there is nothing to win inside it.
+#
+# So the app is simply kept awake. A plain GET every six hours counts as traffic.
+# Nothing here touches the model, the code, or the results.
+name: keep-warm
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every six hours
+  workflow_dispatch:         # and on demand, from the Actions tab
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the app
+        run: |
+          URL="${{ vars.APP_URL || 'https://asdpro1.streamlit.app/' }}"
+          echo "Pinging $URL"
+          code=$(curl -sSL -o /dev/null -w '%{http_code}' --max-time 90 "$URL" || echo 000)
+          echo "HTTP $code"
+          # A sleeping app answers too, so a non-200 is informational, not a failure:
+          # this job exists to generate traffic, not to gate anything.
+          [ "$code" = "000" ] && echo "::warning::no response — check the app URL" || true

@@ -74,6 +74,33 @@ pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
 
+## Start-up
+
+The app is a cold start away from every visit that finds it parked, and the
+delay is the platform, not the model. Measured on Python 3.10 with the pinned
+versions:
+
+| Step | Time |
+|---|---|
+| Clone and install 45 packages | ~11 s (from the deploy log) |
+| `import sklearn` | 1.30 s |
+| `import pandas` | 0.45 s |
+| App modules | 0.49 s |
+| Load the model | 0.97 s |
+
+The bundle is 6.4 MB on disk and **already zlib-compressed** — dumping it
+uncompressed gives 11.1 MB. Re-compressing with lzma reaches 5.2 MB but takes
+six times longer to read, so it is a losing trade. Every option was checked
+against the same reading set and all produced byte-identical scores.
+
+It is a `CalibratedClassifierCV` over a KNN, so the bundle carries the training
+data itself rather than a weight vector — 16,666 x 28 float64 per fold, three
+folds. That is inherent to the model and cannot be trimmed without changing it.
+
+`.github/workflows/keep-warm.yml` pings the app every six hours so it is not
+parked when someone opens it. Point it at a different deployment by setting an
+`APP_URL` repository variable.
+
 ## Deploy
 
 Click the badge above, or go to [share.streamlit.io](https://share.streamlit.io)
