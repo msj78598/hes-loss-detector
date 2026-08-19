@@ -27,8 +27,17 @@ jobs:
           # redirects are followed and the final code is what counts. curl's exit
           # status is captured separately — folding it into the same variable
           # concatenates the two and prints nonsense like "303000".
-          code=$(curl -sSL -o /dev/null                       -A 'keep-warm (github-actions)'                       -w '%{http_code}' --max-time 120 --retry 2 --retry-delay 10                       "$URL")
-          rc=$?
+          # Do NOT follow redirects: a parked app answers 303 and its wake page
+          # bounces in a loop that exhausts curl's limit (error 47) — a 303 is
+          # itself proof the request landed, which is all this job needs. The
+          # health endpoint is asked first because it answers 200 plainly.
+          code=$(curl -sS -o /dev/null -A 'keep-warm (github-actions)'                       -w '%{http_code}' --max-time 60 "${URL%/}/_stcore/health") || code=""
+          echo "health endpoint: ${code:-none}"
+          if [ "${code}" != "200" ]; then
+            code=$(curl -sS -o /dev/null -A 'keep-warm (github-actions)'                         -w '%{http_code}' --max-time 60 "$URL") || code=""
+          fi
+          rc=0
+          [ -z "$code" ] && rc=1
           echo "final HTTP ${code:-none} · curl exit ${rc}"
           # The job's purpose is traffic, not gating, so it never fails the run —
           # it only flags the case where nothing answered at all.
